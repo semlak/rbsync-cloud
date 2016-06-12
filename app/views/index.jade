@@ -1,0 +1,32 @@
+doctype
+html( lang="en" )
+	head
+		title!= title
+		link(href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.0/flatly/bootstrap.min.css", rel="stylesheet", type='text/css')
+		link(href="/css/main.css", rel="stylesheet", type='text/css')
+		link(rel="shortcut icon", href="data:image/x-icon;,", type="image/x-icon") 
+	body
+		.container
+			h1= title
+			h4= "This is the result of an assignment from the FreeCodeCamp cirriculum."
+			if userStories
+				.bs-callout.bs-callout-primary
+					h4='User stories:'
+					ol
+						for story in userStories
+							li= story
+			if notes
+				.bs-callout.bs-callout-primary
+					h4='Notes:'
+					ul
+						for note in notes
+							li= note
+			if examples
+				h3= "Examples:"
+					for example in examples
+						.bs-callout.bs-callout-info
+							h4= "Input:"
+								p.bs-callout.bs-callout-default.code-callout.example= example.input
+							h4= example.action
+								p.bs-callout.bs-callout-default.code-callout.example= example.output
+

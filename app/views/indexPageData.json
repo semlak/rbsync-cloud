@@ -1,0 +1,35 @@
+{
+	"title" : "API Basejump: A URL Shortener microservice",
+	"userStories" : [
+		"I can pass a URL as a parameter and I will receive a shortened URL in the JSON response.", 
+		"If I pass an invalid URL that doesn't follow the valid http://www.example.com format, the JSON response will contain an error instead.", 
+		"When I visit that shortened URL, it will redirect me to my original link." 	
+	],
+	"notes" : [
+		"When passing a URL as a parameter that has already been shortened, it will send the original shortened URL in response (stored in database), rather than a new one", 
+		"I have added a message as part of the return object, so that the user can determine if parsing was successful, and if not, a message saying that the original URL could not be parsed (rather than just returning a null value for the short_url)", 
+		"As for the requirement to verify that the URL is valid, this appears to be a vague and complicated requirement. I am relying on Node's url parsing function, with the additional requirements that the parsing identifies a protocol and hostname. So 'https://www.google.com' and 'mailto:someone@example.com' would be accepted, but not 'www.google.com.'"
+		],
+	"examples" : [
+		{
+			"input" : "APPURL/new/https://www.google.com", 
+			"action" : "Returns:", 
+			"output" : "{ \"original_url\": \"http://www.google.com\", \"short_url\": \"APPURL/1\", \"message\": \"Success\" }"
+		}, 
+		{
+			"input": "APPURL/new/http://freecodecamp.com/news", 
+			"action" : "Returns:", 
+			"output": "{ \"original_url\": \"http://freecodecamp.com/news\", \"short_url\": \"APPURL/4\", \"message\": \"Success\" }"
+		}, 
+		{
+			"input" : "APPURL/1", 
+			"action" : "Redirects To:", 
+			"output": "https://www.google.com" 
+		}, 
+		{
+			"input" : "APPURL/4", 
+			"action" : "Redirects To:", 
+			"output" : "http://freecodecamp.com/news"
+		}
+	]
+}
