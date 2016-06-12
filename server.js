@@ -6,6 +6,7 @@
 // server.js
 
 
+
 var log = function(data) {
 	console.log(data);
 };
