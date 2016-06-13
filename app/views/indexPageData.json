@@ -1,35 +1,29 @@
 {
-	"title" : "API Basejump: A URL Shortener microservice",
+	"title" : "API Basejump: An Image Search Abstraction Layer",
 	"userStories" : [
-		"I can pass a URL as a parameter and I will receive a shortened URL in the JSON response.", 
-		"If I pass an invalid URL that doesn't follow the valid http://www.example.com format, the JSON response will contain an error instead.", 
-		"When I visit that shortened URL, it will redirect me to my original link." 	
+		"I can get the image URLs, alt text and page urls for a set of images relating to a given search string.", 
+		"I can paginate through the responses by adding a ?offset=2 parameter to the URL.", 
+		"I can get a list of the most recently submitted search strings." 	
 	],
 	"notes" : [
-		"When passing a URL as a parameter that has already been shortened, it will send the original shortened URL in response (stored in database), rather than a new one", 
-		"I have added a message as part of the return object, so that the user can determine if parsing was successful, and if not, a message saying that the original URL could not be parsed (rather than just returning a null value for the short_url)", 
-		"As for the requirement to verify that the URL is valid, this appears to be a vague and complicated requirement. I am relying on Node's url parsing function, with the additional requirements that the parsing identifies a protocol and hostname. So 'https://www.google.com' and 'mailto:someone@example.com' would be accepted, but not 'www.google.com.'"
+		"This image search uses Bing, by Microsoft",
+		"I have the app to return 10 results at a time. The offset allows you to get additional results, 10 at a time. So using ?offset=10 is more likely to be productive than ?offset=2"
 		],
 	"examples" : [
 		{
-			"input" : "APPURL/new/https://www.google.com", 
+			"input" : "APPURL/api/recent", 
 			"action" : "Returns:", 
-			"output" : "{ \"original_url\": \"http://www.google.com\", \"short_url\": \"APPURL/1\", \"message\": \"Success\" }"
+			"output" : "[{\"term\":\"lolcat\",\"when\":\"2016-01-14T18:51:15.754Z\"},{\"term\":\"lolcat\",\"when\":\"2016-01-14T18:55:23.000Z\"},{\"term\":\"lolcat\",\"when\":\"2016-01-14T18:55:44.564Z\"},{\"term\":\"lolcat\",\"when\":\"2016-01-14T18:56:01.404Z\"},{\"term\":\"lolcat\",\"when\":\"2016-01-14T18:59:03.887Z\"},{\"term\":\"lolcat\",\"when\":\"2016-01-14T19:00:55.431Z\"},{\"term\":\"lolcat\",\"when\":\"2016-01-14T19:02:53.059Z\"},{\"term\":\"nvidia\",\"when\":\"2016-01-14T19:05:48.657Z\"},{\"term\":\"nvidia\",\"when\":\"2016-01-14T19:24:19.740Z\"},{\"term\":\"nvidia\",\"when\":\"2016-01-14T19:24:47.331Z\"},{\"term\":\"nvidia\",\"when\":\"2016-01-14T19:26:42.587Z\"},{\"term\":\"nvidia\",\"when\":\"2016-01-14T19:29:04.264Z\"},{\"term\":\"khan\",\"when\":\"2016-01-14T19:30:04.088Z\"},{\"term\":\"khan\",\"when\":\"2016-01-14T19:30:15.838Z\"},{\"term\":\"offset=90\",\"when\":\"2016-01-14T19:32:55.424Z\"}]"
 		}, 
 		{
-			"input": "APPURL/new/http://freecodecamp.com/news", 
+			"input": "APPURL/api/imagesearch/lolcat", 
 			"action" : "Returns:", 
-			"output": "{ \"original_url\": \"http://freecodecamp.com/news\", \"short_url\": \"APPURL/4\", \"message\": \"Success\" }"
+			"output": "[{\"url\":\"http://upload.wikimedia.org/wikipedia/commons/3/37/Wikipedia-lolcat.jpg\",\"snippet\":\"Description Wikipedia-lolcat.jpg\",\"thumbnail\":\"http://ts2.mm.bing.net/th?id=OIP.Me229bf93cc4d975ee553c93644968b48o0&pid=15.1\",\"context\":\"http://en.wikipedia.org/wiki/File:Wikipedia-lolcat.jpg\"},{\"url\":\"http://1.bp.blogspot.com/_LvWzMHLToJ4/THyP1jxIHyI/AAAAAAAABTo/jXyRYJkHojk/s1600/cute-lolcat-ears-hear-you.jpg\",\"snippet\":\"Republic Of Durian: LOLcat\",\"thumbnail\":\"http://ts3.mm.bing.net/th?id=OIP.M975db550ad3354d0156be35266476600H0&pid=15.1\",\"context\":\"http://ivan-tai.blogspot.com/2010/08/lolcat.html\"},{\"url\":\"http://iamkio.files.wordpress.com/2011/04/lolcat-1april-trashcat.jpg\",\"snippet\":\"LOLcat Friday: They Are Not Happy With Your Jokes edition\",\"thumbnail\":\"http://ts2.mm.bing.net/th?id=OIP.M001075ad9361f33e8196cfee94d56c2eH0&pid=15.1\",\"context\":\"http://iamkio.wordpress.com/category/lolcat-friday/\"},{\"url\":\"http://thewondergallery.files.wordpress.com/2013/01/lolcat.jpg\",\"snippet\":\"LOLCAT | The Wonder Gallery\",\"thumbnail\":\"http://ts3.mm.bing.net/th?id=OIP.Mcf9b79708b09471e7651ce55f63fdbaeH0&pid=15.1\",\"context\":\"http://thewondergallery.com/2013/01/22/lolcat/\"},{\"url\":\"http://upload.wikimedia.org/wikipedia/commons/4/4c/Lolcat.jpg\",\"snippet\":\"Description Lolcat.jpg\",\"thumbnail\":\"http://ts3.mm.bing.net/th?id=OIP.M7e044b6402e950eaea5a6717cee17f53H0&pid=15.1\",\"context\":\"http://commons.wikimedia.org/wiki/File:Lolcat.jpg\"},{\"url\":\"http://upload.wikimedia.org/wikipedia/commons/f/fa/Lolcat_especially_made_for_Wikinews.jpg\",\"snippet\":\"Description Lolcat especially made for Wikinews.jpg\",\"thumbnail\":\"http://ts3.mm.bing.net/th?id=OIP.Me3fef3f84ded2892108e13ac8bee36bcH0&pid=15.1\",\"context\":\"http://commons.wikimedia.org/wiki/File:Lolcat_especially_made_for_Wikinews.jpg\"},{\"url\":\"http://3.bp.blogspot.com/_LvWzMHLToJ4/THyPXG0cpSI/AAAAAAAABTQ/wDj1PWJcqcw/s1600/lolcat.png\",\"snippet\":\"Republic Of Durian: LOLcat\",\"thumbnail\":\"http://ts4.mm.bing.net/th?id=OIP.M078287bbf4891e507812aff9670db2abH0&pid=15.1\",\"context\":\"http://ivan-tai.blogspot.com/2010/08/lolcat.html\"},{\"url\":\"http://thescanlons.net/blog_photos/071110_lol_cat2.jpg\",\"snippet\":\"soapboxSUPERSTAR\",\"thumbnail\":\"http://ts2.mm.bing.net/th?id=OIP.Me510e9ffc8445965f9952ea2c21f9494H0&pid=15.1\",\"context\":\"http://www.thescanlons.net/weblog/index.php?/weblog/lol_cat_winner/\"},{\"url\":\"http://upload.wikimedia.org/wikipedia/commons/e/e8/U_WAKE_ME_lolcat.jpg\",\"snippet\":\"Description U WAKE ME lolcat.jpg\",\"thumbnail\":\"http://ts4.mm.bing.net/th?id=OIP.M980ea0ccf8d3330b05044b758e0f097eo0&pid=15.1\",\"context\":\"http://en.wikipedia.org/wiki/File:U_WAKE_ME_lolcat.jpg\"},{\"url\":\"http://1.bp.blogspot.com/_LvWzMHLToJ4/THyPX_DbVKI/AAAAAAAABTY/LlOLNd28VvY/s1600/Lolcat.jpg\",\"snippet\":\"Republic Of Durian: LOLcat\",\"thumbnail\":\"http://ts3.mm.bing.net/th?id=OIP.M2189094d68d7a7307e97a80f13a28c89o0&pid=15.1\",\"context\":\"http://ivan-tai.blogspot.com/2010/08/lolcat.html\"}]"
 		}, 
 		{
-			"input" : "APPURL/1", 
-			"action" : "Redirects To:", 
-			"output": "https://www.google.com" 
-		}, 
-		{
-			"input" : "APPURL/4", 
-			"action" : "Redirects To:", 
-			"output" : "http://freecodecamp.com/news"
+			"input": "APPURL/api/imagesearch/lolcat?offset=10", 
+			"action" : "Returns:", 
+			"output": "The next ten results"
 		}
 	]
 }
