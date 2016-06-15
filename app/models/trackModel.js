@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema   = mongoose.Schema;
+var autoIncrement = require('mongoose-auto-increment');
 
 
 var trackSchema = new Schema({
@@ -35,7 +36,8 @@ var trackSchema = new Schema({
 	"last_played" :	Number,
 	"bitrate" :		Number,
 	"hidden" :		Number,
-	"rbsync_id" :		Number,
+	"local_id" : 		Number,
+	// "rbsync_id" :		Number,
 	"sync_time" :		Number,
 	"local_play_count" :	Number,
 	"artist_ch_time" :		Number,
@@ -53,4 +55,9 @@ var trackSchema = new Schema({
 	"play_count_ch_time" :	Number,
 	"bpm_ch_time" :		Number,
 	"genre_ch_time" :		Number
-})
+});
+
+trackSchema.plugin(autoIncrement.plugin, 'track');
+//uses automIncrement plugin to automatically make the IDs incrementing integegers, used for tracks
+
+module.exports = mongoose.model('track', trackSchema);
