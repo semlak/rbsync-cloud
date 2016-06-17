@@ -4,7 +4,7 @@ var autoIncrement = require('mongoose-auto-increment');
 
 
 var trackSchema = new Schema({
-	"rbsync_client_id":	String,
+	"rbsync_client_id":	Number,
 	"location" :		String,
 	"artist" :		String,
 	"album" :			String,
