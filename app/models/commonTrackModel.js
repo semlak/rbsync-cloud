@@ -1,10 +1,11 @@
 var mongoose = require('mongoose');
 var Schema   = mongoose.Schema;
 var autoIncrement = require('mongoose-auto-increment');
-
+// var Track = require('../models/trackModel')
 
 var commonTrackSchema = new Schema({
-	// tracks : [{type: mongoose.Schema.Types.ObjectId, ref: 'Track' }]
+	// tracks : [{type: mongoose.Schema.Types.ObjectId, ref: 'Track' }],
+	// tracks : 			[Track],
 	track_ids : 		[Number],
 	client_ids : 		[Number],
 	artist :			String,
@@ -26,7 +27,7 @@ var commonTrackSchema = new Schema({
 	// mountpoint :		String,
 	// hidden :			Number,
 	// local_id : 		Number,
-	last_update_time :	Number,
+	sync_time :		Number,
 	// rbsync_id :			Number,
 	// media_type :		String,
 	// status :			Number,
